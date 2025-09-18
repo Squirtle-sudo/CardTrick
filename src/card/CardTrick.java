@@ -80,8 +80,11 @@ public class CardTrick {
         if (same_card_count > 1){
             System.out.println("There are " + same_card_count +  ",  " + card_value + " of " + card_suit + " in the magic hand.");
         }
-        else{
+        else if (same_card_count == 1){
             System.out.println("There is " + same_card_count +  ", " + card_value + " of " + card_suit + " in the magic hand.");
+        }
+        else{
+            System.out.println("There is no " + card_value + " of " + card_suit + " in the magic hand.  Better luck next time!");
         }
         
         //insert code to ask the user for Card value and suit, create their card
