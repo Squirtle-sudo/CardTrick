@@ -22,6 +22,7 @@ public class CardTrick {
     {
         Card[] magicHand = new Card[7]; //setting up the magic hand array
         Card lucky_card = new Card();   //setting up lucky card
+        int same_card_count = 0;
 
         lucky_card.setSuit(lucky_card.SUITS[3]);    //lucky card is 2 of clubs
         lucky_card.setValue(2);
@@ -38,53 +39,35 @@ public class CardTrick {
             //c.setValue(insert call to random number generator here)
             //c.setSuit(Card.SUITS[insert call to random number between 0-3 here])
         }
-        
-        
-        String card_suit;
-        String[] card_array;
-        int card_value;
-        int same_card_count = 0;
+        //for loop for printing every card in the magic hand
+        for (Card c : magicHand){
+            System.out.println(c.getSuit() + " " + c.getValue());
+        }
             
-            //scanner to check the players card
-            Scanner sc = new Scanner(System.in);
-            System.out.println("What is the value and the suit of your card?");
-            //the user needs to put a space between both values: 13 diamonds or clubs 2
-            String userCard = sc.nextLine();
+        //scanner to check the players card
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a card value(1-13): ");
+        int userCardValue = sc.nextInt();
+        System.out.print("Enter a suit(0-3 where 0=Hearts, 1=Diamonds, 2=Spades, 3=Clubs: ");
+        int userCardSuit = sc.nextInt();
 
-            //split the card in the number and the string so i can assign it to two different variables
-            card_array = userCard.split(" ");
-
-
-            //cant do an if statement so i did a try / catch to see which of the two unknown Strings were infact an int
-            //and then i put them in their corresponding int and string variables to become a new card's value and suite
-            try{
-                card_value = Integer.parseInt(card_array[0]);
-                card_suit = card_array[1];
-            }catch(NumberFormatException e){
-                card_value = Integer.parseInt(card_array[1]);
-                card_suit = card_array[0];
-            }
-        
         //setting the new suit and value as the new card
-        Card c = new Card();
-        c.setSuit(card_suit);
-        c.setValue(card_value);
+        Card userCard = new Card();
+        userCard.setSuit(Card.SUITS[userCardSuit]);
+        userCard.setValue(userCardValue);
         
         //checking if the card is the same as any of the other cards in the array
         for( Card magic_hand_card : magicHand){
-            if ((magic_hand_card.getSuit().toLowerCase().equals(c.getSuit().toLowerCase())) && (magic_hand_card.getValue() == c.getValue()))
+            if ((magic_hand_card.getSuit().toLowerCase().equals(userCard.getSuit().toLowerCase())) && (magic_hand_card.getValue() == userCard.getValue()))
                 same_card_count++;            
         }
         
-        //checking if theres more than 1 of the same card as the card that was mentionned in the magic hand, or is it one or zero of them
-        if (same_card_count > 1){
-            System.out.println("There are " + same_card_count +  ",  " + card_value + " of " + card_suit + " in the magic hand.");
-        }
-        else if (same_card_count == 1){
-            System.out.println("There is " + same_card_count +  ", " + card_value + " of " + card_suit + " in the magic hand.");
+        //checking if theres one or more of the same card that was selected.  if there is, then YOU WIN , if there is 0 then YOU LOSE
+        if (same_card_count >= 1){
+            System.out.println("Congratulations! Your card is in the magic hand!");
         }
         else{
-            System.out.println("There is no " + card_value + " of " + card_suit + " in the magic hand.  Better luck next time!");
+            System.out.println("Sorry, your card is not in the magic hand.");
         }
         
         //insert code to ask the user for Card value and suit, create their card
